@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">WordTrivia</string>
+    <string name="word_trivia">WORD TRIVIA!</string>
 </resources>
