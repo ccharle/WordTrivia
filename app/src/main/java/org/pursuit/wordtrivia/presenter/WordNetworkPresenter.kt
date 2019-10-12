@@ -1,8 +1,6 @@
 package org.pursuit.wordtrivia.presenter
 
-import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import org.pursuit.wordtrivia.MainContract
 import org.pursuit.wordtrivia.network.WordClient
 import retrofit2.Call
@@ -10,14 +8,13 @@ import retrofit2.Callback
 import retrofit2.Response
 
 private const val TAG: String = "dictionaryItems"
+private const val NETWORK: String = "Response has"
 
-class WordPresenter(
-
-    private val context: Context,
+class WordNetworkPresenter(
     private val client: WordClient,
     private val viewRef: MainContract.View
 ) :
-    MainContract.Presenter, MainContract.Presenter.OnNetworkCallListener {
+    MainContract.NetworkPresenter, MainContract.NetworkPresenter.OnNetworkCallListener {
 
     override fun onNetworkCallFinished(dictionary: HashMap<String, String>?) {
         viewRef.showWord(dictionary?.getOrDefault("abs", "Empty"))
@@ -28,7 +25,7 @@ class WordPresenter(
         getWords()
     }
 
-    override fun netWorkCallFinished(onNetworkListener: MainContract.Presenter.OnNetworkCallListener) {
+    override fun netWorkCallFinished(onNetworkListener: MainContract.NetworkPresenter.OnNetworkCallListener) {
     }
 
 
@@ -36,8 +33,7 @@ class WordPresenter(
 
         client.getAllWords().enqueue(object : Callback<String> {
             override fun onFailure(call: Call<String>, t: Throwable) {
-                Toast.makeText(context, "Fail", Toast.LENGTH_LONG).show()
-
+                Log.d(NETWORK, "Failed")
             }
 
             override fun onResponse(call: Call<String>, response: Response<String>) {
@@ -47,16 +43,13 @@ class WordPresenter(
 
                     val wordResponse: String? = response.body()
                     if (wordResponse != null) {
-//                        for (it in wordResponse) {
-//                            Log.d(TAG,it.toString())
-//                            if (it.toString() == "\n") {
-//                                Log.d(TAG, "Space$it")
+
                         val wordList: List<String> = response.body()!!.lines().toList()
                         wordList.forEach { wordDictionary[it] = it }
                     }
 
                 }
-                onNetworkCallFinished( wordDictionary)
+                onNetworkCallFinished(wordDictionary)
             }
 
         })
