@@ -41,25 +41,28 @@ class WordPresenter(
             }
 
             override fun onResponse(call: Call<String>, response: Response<String>) {
+                val wordDictionary = HashMap<String, String>()
+
                 if (response.body() != null) {
-                    val wordDictionary = HashMap<String, String>()
-                    val input: String = response.body()!!
-                    val result: List<String> = input.split(" ").map { it.trim() }
 
-
-                    result.forEach {
-                        wordDictionary[it] = it
-                        Log.d(TAG, it)
-
+                    val wordResponse: String? = response.body()
+                    if (wordResponse != null) {
+//                        for (it in wordResponse) {
+//                            Log.d(TAG,it.toString())
+//                            if (it.toString() == "\n") {
+//                                Log.d(TAG, "Space$it")
+                        val wordList: List<String> = response.body()!!.lines().toList()
+                        wordList.forEach { wordDictionary[it] = it }
                     }
 
-                    Log.d(TAG, "Success!")
-                    onNetworkCallFinished(wordDictionary)
-
-
                 }
-
+                onNetworkCallFinished( wordDictionary)
             }
+
         })
+
+
     }
+
+
 }
