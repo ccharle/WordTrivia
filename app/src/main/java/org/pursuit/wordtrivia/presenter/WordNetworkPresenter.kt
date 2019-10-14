@@ -6,6 +6,7 @@ import org.pursuit.wordtrivia.network.WordClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.collections.HashMap
 
 private const val TAG: String = "dictionaryItems"
 private const val NETWORK: String = "Response has"
@@ -15,9 +16,11 @@ class WordNetworkPresenter(
     private val viewRef: MainContract.View
 ) :
     MainContract.NetworkPresenter, MainContract.NetworkPresenter.OnNetworkCallListener {
+    val wordDictionary = HashMap<Int, String>()
 
-    override fun onNetworkCallFinished(dictionary: HashMap<String, String>?) {
-        viewRef.showWord(dictionary?.getOrDefault("abs", "Empty"))
+
+    override fun onNetworkCallFinished(dictionary: HashMap<Int, String>?) {
+        viewRef.showHiddenWord(dictionary?.getOrDefault(getRandomWord(), "Empty"))
     }
 
 
@@ -37,7 +40,6 @@ class WordNetworkPresenter(
             }
 
             override fun onResponse(call: Call<String>, response: Response<String>) {
-                val wordDictionary = HashMap<String, String>()
 
                 if (response.body() != null) {
 
@@ -45,7 +47,9 @@ class WordNetworkPresenter(
                     if (wordResponse != null) {
 
                         val wordList: List<String> = response.body()!!.lines().toList()
-                        wordList.forEach { wordDictionary[it] = it }
+                        var count = 0
+
+                        wordList.forEach { wordDictionary[count++] = it }
                     }
 
                 }
@@ -54,6 +58,11 @@ class WordNetworkPresenter(
 
         })
 
+
+    }
+
+    fun getRandomWord(): Int {
+        return (0..wordDictionary.size).random()
 
     }
 
