@@ -11,6 +11,7 @@ interface MainContract {
         fun showHiddenWord(word: String?)
         fun showBlanks(word: String?)
         fun revealHiddenLetter(letter:String?,boolean: Boolean)
+        fun gameOver()
     }
 
 
@@ -30,6 +31,7 @@ interface MainContract {
         fun letterPressed(word:String?)
         fun startGame()
         fun userWordInput(word: String?)
+
     }
 
 

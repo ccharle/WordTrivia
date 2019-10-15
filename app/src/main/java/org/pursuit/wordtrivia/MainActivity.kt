@@ -1,27 +1,25 @@
 package org.pursuit.wordtrivia
 
-import android.content.Context
-import android.content.res.ColorStateList
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
-import android.widget.AdapterView
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.button_layout.*
 import org.pursuit.wordtrivia.adapter.AlphabetAdapter
 import org.pursuit.wordtrivia.network.WordClient
 import org.pursuit.wordtrivia.presenter.TheGamePresenter
 import org.pursuit.wordtrivia.presenter.WordNetworkPresenter
 
+
 private const val TAG = "Response"
 
 class MainActivity : AppCompatActivity(), MainContract.View {
+    override fun gameOver() {
+
+    }
 
 
     private lateinit var textViewArray: Array<TextView?>
@@ -57,7 +55,11 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             }
         } else {
 
-            Toast.makeText(this, "NO" +letter + textViewArray[2]?.text.toString(), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                "NO" + letter + textViewArray[2]?.text.toString(),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -88,6 +90,17 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
 
         }
+        val textViewArray2 = arrayOfNulls<TextView>(word.length)
+        for (i in textViewArray2.indices) {
+            textViewArray2[i] = TextView(this)
+            textViewArray2[i]?.text = "_" + " "
+            textViewArray2[i]?.textSize = 32f
+            textViewArray2[i]?.setTextColor(Color.BLACK)
+
+            linear_layout2.addView(textViewArray2[i])
+
+        }
+
 
         gamePresenterRef = TheGamePresenter(word, this)
         gridvw_letters.setOnItemClickListener { parent, view, position, id ->

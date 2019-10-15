@@ -7,9 +7,12 @@ class TheGamePresenter(private val currentWord: String?, private val viewRef: Ma
 
     MainContract.GamePresenter {
     override fun letterPressed(word: String?) {
+        if (incorrectGuess != 0) {
+            viewRef.revealHiddenLetter(word, guessWord(word!!))
+        } else {
+            viewRef.gameOver()
+        }
 
-
-        viewRef.revealHiddenLetter(word, guessWord(word!!))
     }
 
 
@@ -24,7 +27,7 @@ class TheGamePresenter(private val currentWord: String?, private val viewRef: Ma
     private var guessedWord: Boolean = false
     private var blankArray = ArrayList<String>()
     private var blanks: String? = ""
-    private val incorrectGuess: Int = 6
+    private var incorrectGuess: Int = 6
     private val hiddenPhrase: ArrayList<String>? = null
     private val arrayOfBlanks: ArrayList<String>? = null
 
@@ -41,18 +44,18 @@ class TheGamePresenter(private val currentWord: String?, private val viewRef: Ma
     }
 
     private fun guessWord(input: String): Boolean {
-        return if(currentWord!!.contains(input.toLowerCase()) || currentWord.contains(input)){
-            Log.d("inputWord","YES"+currentWord + input)
+        return if (currentWord!!.contains(input.toLowerCase()) || currentWord.contains(input)) {
+            Log.d("inputWord", "YES" + currentWord + input)
 
             true
-        }else{
-            Log.d("inputWord","NO"+currentWord + input)
-
+        } else {
+            Log.d("inputWord", "NO" + currentWord + input)
+            incorrectGuess--
             false
         }
     }
 
 
-    }
+}
 
 
