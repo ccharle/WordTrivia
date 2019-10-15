@@ -2,7 +2,6 @@ package org.pursuit.wordtrivia
 
 import android.graphics.Color
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -28,6 +27,10 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var netWorkPresenterRef: WordNetworkPresenter
     private lateinit var gamePresenterRef: TheGamePresenter
     private lateinit var alphabetAdapter: AlphabetAdapter
+    private val wordClient by lazy {
+        WordClient.create()
+
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,13 +74,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
 
     override fun showBlanks(word: String?) {
-        //txtvw_guessword.text = word
     }
 
-    private val wordClient by lazy {
-        WordClient.create()
-
-    }
 
     override fun showHiddenWord(word: String?) {
         textViewArray = arrayOfNulls(word?.length!!)
@@ -115,14 +113,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     }
 
-
-    fun letterPressed(view: View) {
-
-        buttonPressed = view.toString()
-        //val singleCharacter = pressedLetter[0]
-        view.isEnabled = false
-        view.setBackgroundResource(R.drawable.letter_down)
-    }
 
 }
 

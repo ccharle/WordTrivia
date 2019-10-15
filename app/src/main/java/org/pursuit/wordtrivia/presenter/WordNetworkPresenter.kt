@@ -8,7 +8,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import kotlin.collections.HashMap
 
-private const val TAG: String = "dictionaryItems"
 private const val NETWORK: String = "Response has"
 
 class WordNetworkPresenter(

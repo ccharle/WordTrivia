@@ -1,6 +1,5 @@
 package org.pursuit.wordtrivia.presenter
 
-import android.util.Log
 import org.pursuit.wordtrivia.MainContract
 
 class TheGamePresenter(private val currentWord: String?, private val viewRef: MainContract.View) :
@@ -15,9 +14,7 @@ class TheGamePresenter(private val currentWord: String?, private val viewRef: Ma
 
     }
 
-
     override fun userWordInput(word: String?) {
-        //guessWord(word!!)
     }
 
     override fun startGame() {
@@ -45,11 +42,9 @@ class TheGamePresenter(private val currentWord: String?, private val viewRef: Ma
 
     private fun guessWord(input: String): Boolean {
         return if (currentWord!!.contains(input.toLowerCase()) || currentWord.contains(input)) {
-            Log.d("inputWord", "YES" + currentWord + input)
 
             true
         } else {
-            Log.d("inputWord", "NO" + currentWord + input)
             incorrectGuess--
             false
         }
