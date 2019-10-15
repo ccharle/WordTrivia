@@ -7,7 +7,7 @@ class TheGamePresenter(private val currentWord: String?, private val viewRef: Ma
     MainContract.GamePresenter {
     override fun letterPressed(word: String?) {
         if (incorrectGuess != 0) {
-            viewRef.revealHiddenLetter(word, guessWord(word!!))
+            viewRef.revealHiddenLetter(word, guessWord(word!!),incorrectGuess)
         } else {
             viewRef.gameOver()
         }

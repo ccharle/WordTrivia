@@ -10,7 +10,7 @@ interface MainContract {
         fun onLetterPressed()
         fun showHiddenWord(word: String?)
         fun showBlanks(word: String?)
-        fun revealHiddenLetter(letter:String?,boolean: Boolean)
+        fun revealHiddenLetter(letter:String?,boolean: Boolean,score:Int)
         fun gameOver()
     }
 

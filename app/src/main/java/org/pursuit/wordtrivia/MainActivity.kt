@@ -44,7 +44,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     }
 
-    override fun revealHiddenLetter(letter: String?, boolean: Boolean) {
+    override fun revealHiddenLetter(letter: String?, boolean: Boolean, score: Int) {
+        txvw_score.text = score.toString()
         if (boolean) {
             for (i in textViewArray.indices) {
                 if (textViewArray[i]?.text.toString().contains(letter!!.single().toLowerCase())) {
@@ -84,7 +85,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             textViewArray[i]?.text = word[i] + " "
             textViewArray[i]?.textSize = 32f
             textViewArray[i]?.setTextColor(Color.WHITE)
-            linear_layout.addView(textViewArray[i])
+            linear_layout1.addView(textViewArray[i])
 
 
         }
