@@ -1,13 +1,20 @@
 package org.pursuit.wordtrivia.presenter
 
+import android.util.Log
 import org.pursuit.wordtrivia.MainContract
 
 class TheGamePresenter(private val currentWord: String?, private val viewRef: MainContract.View) :
+
     MainContract.GamePresenter {
+    override fun letterPressed(word: String?) {
+
+
+        viewRef.revealHiddenLetter(word, guessWord(word!!))
+    }
 
 
     override fun userWordInput(word: String?) {
-        guessWord(word!!)
+        //guessWord(word!!)
     }
 
     override fun startGame() {
@@ -33,18 +40,19 @@ class TheGamePresenter(private val currentWord: String?, private val viewRef: Ma
 
     }
 
-    private fun guessWord(input :String) {
-        if (currentWord!!.contains(input)) {
-            for (i in currentWord) {
-                if (currentWord[i.toInt()].equals(input)) {
-                    blankArray[i.toInt()] = input
-                    viewRef.showBlanks(blankArray.toString())
-                }
-            }
+    private fun guessWord(input: String): Boolean {
+        return if(currentWord!!.contains(input.toLowerCase()) || currentWord.contains(input)){
+            Log.d("inputWord","YES"+currentWord + input)
 
+            true
+        }else{
+            Log.d("inputWord","NO"+currentWord + input)
+
+            false
         }
+    }
 
 
     }
 
-}
+

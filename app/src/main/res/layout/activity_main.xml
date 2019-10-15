@@ -29,11 +29,19 @@
         app:layout_constraintTop_toBottomOf="@+id/imgvw_userprogress" />
 
 
-    <GridLayout
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+    <GridView
+        android:id="@+id/gridvw_letters"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="7"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linear_layout"></GridLayout>
+        app:layout_constraintTop_toBottomOf="@+id/linear_layout">
+
+
+
+    </GridView>
 </androidx.constraintlayout.widget.ConstraintLayout>
