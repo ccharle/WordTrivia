@@ -15,11 +15,17 @@ class WordNetworkPresenter(
     private val viewRef: MainContract.View
 ) :
     MainContract.NetworkPresenter, MainContract.NetworkPresenter.OnNetworkCallListener {
+
     val wordDictionary = HashMap<Int, String>()
+
+    override fun requestRandomWord() {
+        viewRef.randomHiddenWord(wordDictionary?.getOrDefault(getRandomWord(), "Empty"))
+    }
+
 
 
     override fun onNetworkCallFinished(dictionary: HashMap<Int, String>?) {
-        viewRef.showHiddenWord(dictionary?.getOrDefault(getRandomWord(), "Empty"))
+        viewRef.randomHiddenWord(dictionary?.getOrDefault(getRandomWord(), "Empty"))
     }
 
 

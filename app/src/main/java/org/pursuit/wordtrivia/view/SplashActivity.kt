@@ -9,7 +9,7 @@ import org.pursuit.wordtrivia.R
 class SplashActivity : AppCompatActivity() {
 
     private var delayHandler: Handler? = null
-    private val splashDelay: Long = 3000
+    private val splashDelay: Long = 5000
 
     private val runnable: Runnable = Runnable {
         if (!isFinishing) {
