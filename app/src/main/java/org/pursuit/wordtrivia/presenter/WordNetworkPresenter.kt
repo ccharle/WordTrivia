@@ -1,7 +1,7 @@
 package org.pursuit.wordtrivia.presenter
 
 import android.util.Log
-import org.pursuit.wordtrivia.MainContract
+import org.pursuit.wordtrivia.contract.MainContract
 import org.pursuit.wordtrivia.network.WordClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -60,7 +60,7 @@ class WordNetworkPresenter(
 
     }
 
-    fun getRandomWord(): Int {
+   private fun getRandomWord(): Int {
         return (0..wordDictionary.size).random()
 
     }

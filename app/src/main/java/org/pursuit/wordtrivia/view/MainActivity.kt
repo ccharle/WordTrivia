@@ -1,4 +1,4 @@
-package org.pursuit.wordtrivia
+package org.pursuit.wordtrivia.view
 
 import android.graphics.Color
 import android.os.Bundle
@@ -7,6 +7,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import org.pursuit.wordtrivia.contract.MainContract
+import org.pursuit.wordtrivia.R
 import org.pursuit.wordtrivia.adapter.AlphabetAdapter
 import org.pursuit.wordtrivia.network.WordClient
 import org.pursuit.wordtrivia.presenter.TheGamePresenter
@@ -40,6 +42,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         gridvw_letters.adapter = alphabetAdapter
         netWorkPresenterRef = WordNetworkPresenter(wordClient, this)
         netWorkPresenterRef.getWordList()
+        //bttn_newword.setOnClickListener {  }
 
 
     }
@@ -79,17 +82,19 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
 
     override fun showHiddenWord(word: String?) {
-        textViewArray = arrayOfNulls(word?.length!!)
-        for (i in textViewArray.indices) {
-            textViewArray[i] = TextView(this)
-            textViewArray[i]?.text = word[i] + " "
-            textViewArray[i]?.textSize = 32f
-            textViewArray[i]?.setTextColor(Color.WHITE)
-            linear_layout1.addView(textViewArray[i])
+//        textViewArray = arrayOfNulls(word?.length!!)
+//        for (i in textViewArray.indices) {
+//            textViewArray[i] = TextView(this)
+//            textViewArray[i]?.text = word[i] + " "
+//            textViewArray[i]?.textSize = 32f
+//            textViewArray[i]?.setTextColor(Color.WHITE)
+//            linear_layout1.addView(textViewArray[i])
+//
+//
+//        }
+        setArray(word)
 
-
-        }
-        val textViewArray2 = arrayOfNulls<TextView>(word.length)
+        val textViewArray2 = arrayOfNulls<TextView>(word?.length!!)
         for (i in textViewArray2.indices) {
             textViewArray2[i] = TextView(this)
             textViewArray2[i]?.text = "_" + " "
@@ -99,6 +104,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             linear_layout2.addView(textViewArray2[i])
 
         }
+
 
 
         gamePresenterRef = TheGamePresenter(word, this)
@@ -114,6 +120,17 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     }
 
+    private fun setArray(word: String?) {
+        textViewArray = arrayOfNulls(word?.length!!)
+        for (i in textViewArray.indices) {
+            textViewArray[i] = TextView(this)
+            textViewArray[i]?.text = word[i] + " "
+            textViewArray[i]?.textSize = 32f
+            textViewArray[i]?.setTextColor(Color.WHITE)
+            linear_layout1.addView(textViewArray[i])
+
+        }
+    }
 
 }
 

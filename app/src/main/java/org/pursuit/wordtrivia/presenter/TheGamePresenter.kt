@@ -1,6 +1,6 @@
 package org.pursuit.wordtrivia.presenter
 
-import org.pursuit.wordtrivia.MainContract
+import org.pursuit.wordtrivia.contract.MainContract
 
 class TheGamePresenter(private val currentWord: String?, private val viewRef: MainContract.View) :
 
@@ -18,15 +18,12 @@ class TheGamePresenter(private val currentWord: String?, private val viewRef: Ma
     }
 
     override fun startGame() {
-        setBlanks()
     }
 
     private var guessedWord: Boolean = false
     private var blankArray = ArrayList<String>()
-    private var blanks: String? = ""
     private var incorrectGuess: Int = 6
-    private val hiddenPhrase: ArrayList<String>? = null
-    private val arrayOfBlanks: ArrayList<String>? = null
+
 
 
     private fun setBlanks() {

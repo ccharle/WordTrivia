@@ -1,16 +1,11 @@
-package org.pursuit.wordtrivia
-
-import android.view.View
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
+package org.pursuit.wordtrivia.contract
 
 interface MainContract {
     interface View {
         fun onLetterPressed()
         fun showHiddenWord(word: String?)
         fun showBlanks(word: String?)
-        fun revealHiddenLetter(letter:String?,boolean: Boolean,score:Int)
+        fun revealHiddenLetter(letter: String?, boolean: Boolean, score: Int)
         fun gameOver()
     }
 
@@ -28,7 +23,7 @@ interface MainContract {
     }
 
     interface GamePresenter {
-        fun letterPressed(word:String?)
+        fun letterPressed(word: String?)
         fun startGame()
         fun userWordInput(word: String?)
 
