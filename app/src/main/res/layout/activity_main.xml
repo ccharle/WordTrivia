@@ -104,41 +104,42 @@
 
     </LinearLayout>
 
-    <ScrollView
-        android:id="@+id/scrollvw_incorrectguesses"
+    <LinearLayout
+        android:id="@+id/linear_layoutscrollview"
         android:layout_width="158dp"
-        android:layout_height="185dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@+id/imgvw_userprogress"
         app:layout_constraintEnd_toStartOf="@+id/imgvw_userprogress"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintStart_toStartOf="parent">
 
-        <LinearLayout
-            android:id="@+id/linear_layout_incorrecguesses"
+        <TextView
+            android:id="@+id/txtvw_guessSign"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/txtvw_guessSign"
+            android:scrollbars="vertical"
+            android:singleLine="false"
+            android:text="Incorrect Tally" />
+
+
+            <LinearLayout
+                android:id="@+id/linear_layout_incorrecguesses"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Incorrect Tally"
-                android:singleLine="false"
-                android:scrollbars="vertical" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txtvw_incorrectguesses"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxWidth="10dp"
-                android:text="Hello"
-                android:singleLine="false"
-                android:scrollbars="vertical" />
+                <TextView
+                    android:id="@+id/txtvw_incorrectguesses"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="10dp"
+                    android:scrollbars="vertical"
+                    android:singleLine="false"
+                    android:textSize="24dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
-        </LinearLayout>
-
-
-    </ScrollView>
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -45,8 +45,9 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         netWorkPresenterRef = WordNetworkPresenter(wordClient, this)
         netWorkPresenterRef.getWordList()
         bttn_newword.setOnClickListener {
-            netWorkPresenterRef.requestRandomWord();gamePresenterRef.onRefreshGame();
-            txtvw_incorrectguesses.text = null
+            netWorkPresenterRef.requestRandomWord();gamePresenterRef.onRefreshGame()
+            txtvw_incorrectguesses.text = ""
+            wrongGuessTally = ""
         }
 
     }
@@ -82,14 +83,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
                     displayWordsArray[i].setTextColor(Color.BLACK)
                 }
             }
-        } //else {
-//
-////            Toast.makeText(
-////                this,
-////                "NO" + letter + displayWordsArray[2].text.toString(),
-////                Toast.LENGTH_SHORT
-////            ).show()
-//        }
+        } 
     }
 
 
