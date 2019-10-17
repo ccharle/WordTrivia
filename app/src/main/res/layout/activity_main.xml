@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center_vertical|center_horizontal"
-    tools:context=".view.MainActivity"
-    android:background="@color/colorwhite">
+    android:background="@color/colorwhite"
+    tools:context=".view.MainActivity">
 
 
     <ImageView
@@ -14,8 +14,6 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.559"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
@@ -83,10 +81,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gridvw_letters"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/gridvw_letters">
 
         <Button
             android:id="@+id/bttn_reset"
@@ -105,6 +103,34 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollvw_incorrectguesses"
+        android:layout_width="158dp"
+        android:layout_height="185dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgvw_userprogress"
+        app:layout_constraintEnd_toStartOf="@+id/imgvw_userprogress"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/linear_layout_incorrecguesses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtvw_incorrectguesses"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxWidth="10dp"
+                android:singleLine="false"
+                android:scrollbars="vertical" />
+
+        </LinearLayout>
+
+
+    </ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
