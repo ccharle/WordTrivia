@@ -1,5 +1,6 @@
 package org.pursuit.wordtrivia.presenter
 
+import android.util.Log
 import org.pursuit.wordtrivia.contract.MainContract
 
 class TheGamePresenter(private val currentWord: String?, private val viewRef: MainContract.View) :
@@ -7,19 +8,21 @@ class TheGamePresenter(private val currentWord: String?, private val viewRef: Ma
     MainContract.GamePresenter {
     override fun onRefreshGame() {
         incorrectGuess = 6
-        lettersGuessed.clear()
+        lettersGuessedArray.clear()
+        guessCount = 0
     }
 
 
-    private var lettersGuessed = arrayListOf<String>()
+    private var lettersGuessedArray = arrayListOf<String>()
     private var guessedWord: Boolean = false
     private var blankArray = ArrayList<String>()
     private var incorrectGuess: Int = 6
+    private var guessCount = 0
 
 
     override fun letterPressed(word: String?) {
         if (incorrectGuess != 0) {
-            viewRef.revealHiddenLetter(word, guessWord(word!!), incorrectGuess, lettersGuessed)
+            viewRef.revealHiddenLetter(word, guessWord(word!!), incorrectGuess, lettersGuessedArray)
         } else {
             viewRef.gameOver()
         }
@@ -34,13 +37,12 @@ class TheGamePresenter(private val currentWord: String?, private val viewRef: Ma
 
 
     private fun guessWord(input: String): Boolean {
-        return if (currentWord!!.contains(input.toLowerCase()) || currentWord.contains(input)) {
 
+        return if (currentWord!!.contains(input.toLowerCase()) || currentWord.contains(input)) {
             true
         } else {
-            for (i in lettersGuessed.indices) {
-                lettersGuessed.add(i, input)
-            }
+                lettersGuessedArray.add(guessCount, input)
+                guessCount++
             incorrectGuess--
             false
         }

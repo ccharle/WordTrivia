@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     private var displayWordsArray = arrayListOf<TextView>()
     private var blanksArray = arrayListOf<TextView>()
-
+    private var wrongGuessTally = ""
     private var buttonPressed: String? = null
     private lateinit var netWorkPresenterRef: WordNetworkPresenter
     private lateinit var gamePresenterRef: TheGamePresenter
@@ -44,7 +44,10 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         gridvw_letters.adapter = alphabetAdapter
         netWorkPresenterRef = WordNetworkPresenter(wordClient, this)
         netWorkPresenterRef.getWordList()
-        bttn_newword.setOnClickListener { netWorkPresenterRef.requestRandomWord();gamePresenterRef.onRefreshGame() }
+        bttn_newword.setOnClickListener {
+            netWorkPresenterRef.requestRandomWord();gamePresenterRef.onRefreshGame();
+            txtvw_incorrectguesses.text = null
+        }
 
     }
 
@@ -54,12 +57,18 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         score: Int,
         guessedLettersArray: ArrayList<String>
     ) {
-        var wrongGuessTally = ""
+
         for (i in guessedLettersArray.indices) {
-            wrongGuessTally += guessedLettersArray[i]
+            if (!wrongGuessTally.contains(guessedLettersArray[i])) {
+                wrongGuessTally += guessedLettersArray[i] + "\n"
+            }
         }
         txtvw_incorrectguesses.text = wrongGuessTally + " "
-
+        Toast.makeText(
+            this,
+            wrongGuessTally + guessedLettersArray.size.toString(),
+            Toast.LENGTH_SHORT
+        ).show()
         txtvw_incorrectguesses
         txvw_score.text = score.toString() + remainingGuessesSentence
         if (boolean) {
@@ -73,14 +82,14 @@ class MainActivity : AppCompatActivity(), MainContract.View {
                     displayWordsArray[i].setTextColor(Color.BLACK)
                 }
             }
-        } else {
-
-            Toast.makeText(
-                this,
-                "NO" + letter + displayWordsArray[2].text.toString(),
-                Toast.LENGTH_SHORT
-            ).show()
-        }
+        } //else {
+//
+////            Toast.makeText(
+////                this,
+////                "NO" + letter + displayWordsArray[2].text.toString(),
+////                Toast.LENGTH_SHORT
+////            ).show()
+//        }
     }
 
 
