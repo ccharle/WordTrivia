@@ -66,7 +66,9 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             for (i in displayWordsArray.indices) {
                 if (displayWordsArray[i].text.toString().contains(letter!!.single().toLowerCase())) {
                     displayWordsArray[i].setTextColor(Color.BLACK)
+
                 }
+
             }
         }
     }
