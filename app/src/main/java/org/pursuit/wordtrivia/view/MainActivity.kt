@@ -132,6 +132,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun gameOver() {
+        audioLoader.onLosing()
         gridvw_letters.isEnabled = false
         gridvw_letters.isClickable = false
         txtvw_gameover.setTextColor(Color.BLACK)
@@ -141,12 +142,15 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
         }
 
+
     }
 
     override fun gameWon() {
         val snack =
             Snackbar.make(main_constraintlayout, "WINNER WINNER!", Snackbar.LENGTH_LONG)
         snack.show()
+        audioLoader.onWin()
+        audioLoader.releaseMediaPlayer()
     }
 
     private fun gameSetup() {
@@ -155,13 +159,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         netWorkPresenterRef = WordNetworkPresenter(wordClient, this)
         netWorkPresenterRef.getWordList()
         bttn_newword.setOnClickListener {
-            gridvw_letters.isEnabled = true
-            gridvw_letters.isClickable = true
-            netWorkPresenterRef.requestRandomWord();gamePresenterRef.onRefreshGame()
-            txtvw_incorrectguesses.text = ""
-            wrongGuessTally = ""
-            txtvw_gameover.setTextColor(Color.WHITE)
-            imgvw_userprogress.setBackgroundResource(R.color.colorwhite)
+            resetGame()
+
         }
         bttn_reveal.setOnClickListener {
             gameOver()
@@ -184,6 +183,16 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         imgvw_userprogress.setBackgroundResource(img)
     }
 
+    private fun resetGame() {
+        audioLoader.releaseMediaPlayer()
+        gridvw_letters.isEnabled = true
+        gridvw_letters.isClickable = true
+        netWorkPresenterRef.requestRandomWord();gamePresenterRef.onRefreshGame()
+        txtvw_incorrectguesses.text = ""
+        wrongGuessTally = ""
+        txtvw_gameover.setTextColor(Color.WHITE)
+        imgvw_userprogress.setBackgroundResource(R.color.colorwhite)
+    }
 
 }
 

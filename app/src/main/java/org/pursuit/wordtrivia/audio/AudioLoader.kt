@@ -9,6 +9,10 @@ class AudioLoader(
     private var mediaPlayer: MediaPlayer
 ) {
 
+    fun onSplashScreen(){
+        mediaPlayer = MediaPlayer.create(context, R.raw.on_starting)
+        mediaPlayer.start()
+    }
     fun correctSound() {
 
         mediaPlayer = MediaPlayer.create(context, R.raw.correct_sound)
@@ -26,9 +30,17 @@ class AudioLoader(
     }
 
     fun releaseMediaPlayer() {
-        mediaPlayer.stop()
         mediaPlayer.release()
     }
 
+    fun onWin() {
+        mediaPlayer = MediaPlayer.create(context, R.raw.on_win)
+        mediaPlayer.start()
+    }
 
+    fun onLosing() {
+        mediaPlayer = MediaPlayer.create(context, R.raw.on_losing)
+        mediaPlayer.start()
+
+    }
 }
