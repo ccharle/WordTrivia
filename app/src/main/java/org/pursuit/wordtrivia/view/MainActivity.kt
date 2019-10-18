@@ -60,18 +60,15 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             }
         }
         txtvw_incorrectguesses.text = wrongGuessTally + " "
-        Toast.makeText(
-            this,
-            wrongGuessTally + guessedLettersArray.size.toString(),
-            Toast.LENGTH_SHORT
-        ).show()
         txtvw_incorrectguesses
         txvw_score.text = score.toString() + remainingGuessesSentence
         if (boolean) {
             for (i in displayWordsArray.indices) {
                 if (displayWordsArray[i].text.toString().contains(letter!!.single().toLowerCase())) {
                     displayWordsArray[i].setTextColor(Color.BLACK)
+
                 }
+
             }
         }
     }

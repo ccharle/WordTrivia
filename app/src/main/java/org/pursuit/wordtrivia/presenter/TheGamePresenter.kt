@@ -1,5 +1,6 @@
 package org.pursuit.wordtrivia.presenter
 
+import android.util.Log
 import org.pursuit.wordtrivia.R
 import org.pursuit.wordtrivia.contract.MainContract
 
@@ -31,7 +32,6 @@ class TheGamePresenter(private val currentWord: String?, private val viewRef: Ma
             viewRef.revealHiddenLetter(word, guessWord(word!!), incorrectGuess, lettersGuessedArray)
             if (currentWord != null) {
                 if (correctGuessCount == currentWord.length) {
-                    incorrectGuess = 0
                     viewRef.gameWon()
                 }
 
@@ -50,7 +50,13 @@ class TheGamePresenter(private val currentWord: String?, private val viewRef: Ma
     private fun guessWord(input: String): Boolean {
 
         return if (currentWord!!.contains(input.toLowerCase()) || currentWord.contains(input)) {
-            correctGuessCount++
+            for (i in currentWord.indices){
+                if(currentWord[i] == input.toLowerCase().single() || currentWord[i] == input.single()){
+                    correctGuessCount++
+
+                }
+            }
+
             true
         } else {
             viewRef.showUserProgress(displayFall())
