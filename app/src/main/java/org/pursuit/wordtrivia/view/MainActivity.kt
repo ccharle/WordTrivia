@@ -70,11 +70,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         if (boolean) {
             for (i in displayWordsArray.indices) {
                 if (displayWordsArray[i].text.toString().contains(letter!!.single().toLowerCase())) {
-                    Toast.makeText(
-                        this,
-                        "YES" + displayWordsArray[i].text.toString(),
-                        Toast.LENGTH_SHORT
-                    ).show()
                     displayWordsArray[i].setTextColor(Color.BLACK)
                 }
             }
@@ -154,7 +149,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             Snackbar.make(main_constraintlayout, "WINNER WINNER!", Snackbar.LENGTH_LONG)
         snack.show()
     }
-    private fun gameSetup(){
+
+    private fun gameSetup() {
         alphabetAdapter = AlphabetAdapter(this)
         gridvw_letters.adapter = alphabetAdapter
         netWorkPresenterRef = WordNetworkPresenter(wordClient, this)
@@ -164,7 +160,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             txtvw_incorrectguesses.text = ""
             wrongGuessTally = ""
             txtvw_gameover.setTextColor(Color.WHITE)
-
+            imgvw_userprogress.setBackgroundResource(R.color.colorwhite)
         }
         bttn_reveal.setOnClickListener {
             gameOver()

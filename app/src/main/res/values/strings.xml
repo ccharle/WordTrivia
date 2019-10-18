@@ -5,4 +5,5 @@
     <string name="next">Next!</string>
     <string name="the_word_is">The Word is...</string>
     <string name="reveal">Reveal</string>
+    <string name="previous_guesses">Previous Guesses</string>
 </resources>
