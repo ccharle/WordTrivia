@@ -3,4 +3,6 @@
     <string name="word_trivia">WORD TRIVIA!</string>
     <string name="reset">Reset</string>
     <string name="next">Next!</string>
+    <string name="the_word_is">The Word is...</string>
+    <string name="reveal">Reveal</string>
 </resources>

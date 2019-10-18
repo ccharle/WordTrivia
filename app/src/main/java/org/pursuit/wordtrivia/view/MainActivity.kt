@@ -2,10 +2,12 @@ package org.pursuit.wordtrivia.view
 
 import android.graphics.Color
 import android.os.Bundle
+import android.text.method.MovementMethod
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import org.pursuit.wordtrivia.contract.MainContract
 import org.pursuit.wordtrivia.R
@@ -19,8 +21,8 @@ private const val TAG = "Response"
 private const val remainingGuessesSentence = " Guesses remaining."
 
 class MainActivity : AppCompatActivity(), MainContract.View {
-    override fun gameOver() {
-
+    override fun showUserProgress(img: Int) {
+        imgvw_userprogress.setBackgroundResource(img)
     }
 
 
@@ -40,15 +42,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        alphabetAdapter = AlphabetAdapter(this)
-        gridvw_letters.adapter = alphabetAdapter
-        netWorkPresenterRef = WordNetworkPresenter(wordClient, this)
-        netWorkPresenterRef.getWordList()
-        bttn_newword.setOnClickListener {
-            netWorkPresenterRef.requestRandomWord();gamePresenterRef.onRefreshGame()
-            txtvw_incorrectguesses.text = ""
-            wrongGuessTally = ""
-        }
+        gameSetup()
+
 
     }
 
@@ -83,7 +78,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
                     displayWordsArray[i].setTextColor(Color.BLACK)
                 }
             }
-        } 
+        }
     }
 
 
@@ -142,6 +137,42 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         }
 
     }
+
+    override fun gameOver() {
+        txtvw_gameover.setTextColor(Color.BLACK)
+        for (index in displayWordsArray.indices) {
+            displayWordsArray[index].setTextColor(Color.BLACK)
+
+
+        }
+
+    }
+
+    override fun gameWon() {
+
+        val snack =
+            Snackbar.make(main_constraintlayout, "WINNER WINNER!", Snackbar.LENGTH_LONG)
+        snack.show()
+    }
+    private fun gameSetup(){
+        alphabetAdapter = AlphabetAdapter(this)
+        gridvw_letters.adapter = alphabetAdapter
+        netWorkPresenterRef = WordNetworkPresenter(wordClient, this)
+        netWorkPresenterRef.getWordList()
+        bttn_newword.setOnClickListener {
+            netWorkPresenterRef.requestRandomWord();gamePresenterRef.onRefreshGame()
+            txtvw_incorrectguesses.text = ""
+            wrongGuessTally = ""
+            txtvw_gameover.setTextColor(Color.WHITE)
+
+        }
+        bttn_reveal.setOnClickListener {
+            gameOver()
+
+        }
+        txtvw_incorrectguesses.movementMethod
+    }
+
 
 }
 

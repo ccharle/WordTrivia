@@ -13,6 +13,8 @@ interface MainContract {
         )
 
         fun gameOver()
+        fun gameWon()
+        fun showUserProgress(img :Int)
     }
 
 
@@ -34,9 +36,8 @@ interface MainContract {
         fun startGame()
         fun userWordInput(word: String?)
         fun onRefreshGame()
+        fun onGameWon()
     }
-
-
 
 
     interface Model {
