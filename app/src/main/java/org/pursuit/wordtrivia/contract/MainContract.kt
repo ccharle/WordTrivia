@@ -15,6 +15,8 @@ interface MainContract {
         fun gameOver()
         fun gameWon()
         fun showUserProgress(img :Int)
+        fun correctSound()
+        fun incorrectSound()
     }
 
 
