@@ -2,6 +2,7 @@ package org.pursuit.wordtrivia.presenter
 
 import android.util.Log
 import org.pursuit.wordtrivia.R
+import org.pursuit.wordtrivia.audio.AudioLoader
 import org.pursuit.wordtrivia.contract.MainContract
 
 class TheGamePresenter(private val currentWord: String?, private val viewRef: MainContract.View) :
@@ -15,6 +16,8 @@ class TheGamePresenter(private val currentWord: String?, private val viewRef: Ma
         incorrectGuess = 6
         lettersGuessedArray.clear()
         incorrectGuessCount = 0
+        duplicateCounter = 0
+
 
     }
 
@@ -25,7 +28,7 @@ class TheGamePresenter(private val currentWord: String?, private val viewRef: Ma
     private var incorrectGuess: Int = 6
     private var incorrectGuessCount = 0
     private var correctGuessCount = 0
-
+    private var duplicateCounter = 0
 
     override fun letterPressed(word: String?) {
         if (incorrectGuess != 0) {
@@ -50,16 +53,23 @@ class TheGamePresenter(private val currentWord: String?, private val viewRef: Ma
     private fun guessWord(input: String): Boolean {
 
         return if (currentWord!!.contains(input.toLowerCase()) || currentWord.contains(input)) {
-            for (i in currentWord.indices){
-                if(currentWord[i] == input.toLowerCase().single() || currentWord[i] == input.single()){
-                    correctGuessCount++
+            if (!blankArray.contains(input)) {
+                for (i in currentWord.indices) {
+                    if (currentWord[i] == input.toLowerCase().single() || currentWord[i] == input.single()) {
 
+                        correctGuessCount++
+
+
+                    }
                 }
+                blankArray.add(duplicateCounter, input)
+                duplicateCounter++
+                viewRef.correctSound()
             }
-
             true
         } else {
             viewRef.showUserProgress(displayFall())
+            viewRef.incorrectSound()
             lettersGuessedArray.add(incorrectGuessCount, input)
             incorrectGuessCount++
             incorrectGuess--
