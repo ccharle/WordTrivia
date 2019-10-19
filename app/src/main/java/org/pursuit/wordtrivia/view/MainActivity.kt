@@ -1,6 +1,7 @@
 package org.pursuit.wordtrivia.view
 
 import android.graphics.Color
+import android.graphics.drawable.AnimationDrawable
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.widget.Button
@@ -31,7 +32,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var gamePresenterRef: TheGamePresenter
     private lateinit var alphabetAdapter: AlphabetAdapter
     private val audioLoader = AudioLoader(this, MediaPlayer())
-
+    private  var animations: AnimationDrawable? = null
 
     private val wordClient by lazy {
         WordClient.create()
@@ -42,7 +43,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        animations = gridvw_letters.background as? AnimationDrawable
+        backGroundAnimations()
         gameSetup()
 
 
@@ -50,6 +52,9 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun onResume() {
         super.onResume()
+        if (animations != null && !animations!!.isRunning()) {
+            animations!!.start()
+        }
     }
 
     override fun onPause() {
@@ -206,11 +211,23 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     override fun onStop() {
         super.onStop()
         audioLoader.releaseMediaPlayer()
+        if (animations != null && !animations!!.isRunning()) {
+            animations!!.stop()
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         audioLoader.releaseMediaPlayer()
+    }
+
+    private fun backGroundAnimations() {
+        animations?.setEnterFadeDuration(5000);
+
+        // setting exit fade animation duration to 2 seconds
+        animations?.setExitFadeDuration(2000);
+
+
     }
 
 }

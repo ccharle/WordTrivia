@@ -5,4 +5,11 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorwhite">#FFFFFF</color>
+    <color name="colorHotPink">#FE36B5</color>
+    <color name="colorDandelionYellow">#FEC979</color>
+    <color name="colorPalePurple">#918CFD</color>
+    <color name="colorDarkPurple">#992BFD</color>
+
+
+
 </resources>

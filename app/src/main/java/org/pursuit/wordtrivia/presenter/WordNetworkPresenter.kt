@@ -41,7 +41,6 @@ class WordNetworkPresenter(
 
         client.getAllWords().enqueue(object : Callback<String> {
             override fun onFailure(call: Call<String>, t: Throwable) {
-                Log.d(NETWORK, "Failed")
             }
 
             override fun onResponse(call: Call<String>, response: Response<String>) {
