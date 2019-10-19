@@ -4,6 +4,10 @@ import android.graphics.Color
 import android.graphics.drawable.AnimationDrawable
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.Handler
+import android.text.method.MovementMethod
+import android.text.method.ScrollingMovementMethod
+import android.view.animation.Animation
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +20,8 @@ import org.pursuit.wordtrivia.contract.MainContract
 import org.pursuit.wordtrivia.network.WordClient
 import org.pursuit.wordtrivia.presenter.TheGamePresenter
 import org.pursuit.wordtrivia.presenter.WordNetworkPresenter
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 private const val TAG = "Response"
@@ -32,8 +38,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var gamePresenterRef: TheGamePresenter
     private lateinit var alphabetAdapter: AlphabetAdapter
     private val audioLoader = AudioLoader(this, MediaPlayer())
-    private  var animations: AnimationDrawable? = null
-
+    private var animations: AnimationDrawable? = null
     private val wordClient by lazy {
         WordClient.create()
 
@@ -55,6 +60,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         if (animations != null && !animations!!.isRunning()) {
             animations!!.start()
         }
+        audioLoader.backGroundMusic()
     }
 
     override fun onPause() {
@@ -169,6 +175,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     private fun gameSetup() {
         audioLoader.backGroundMusic()
         alphabetAdapter = AlphabetAdapter(this)
+        txtvw_incorrectguesses.movementMethod = ScrollingMovementMethod()
         gridvw_letters.adapter = alphabetAdapter
         netWorkPresenterRef = WordNetworkPresenter(wordClient, this)
         netWorkPresenterRef.getWordList()
@@ -186,10 +193,21 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun correctSound() {
         audioLoader.correctSound()
+        showGreenLight()
+
+        Handler().postDelayed({
+            bttn_buzzer.setBackgroundResource(R.drawable.circular_button)
+        }, 300)
+
     }
 
     override fun incorrectSound() {
         audioLoader.incorrectSound()
+        showRedLight()
+
+        Handler().postDelayed({
+            bttn_buzzer.setBackgroundResource(R.drawable.circular_button)
+        }, 300)
 
     }
 
@@ -210,7 +228,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun onStop() {
         super.onStop()
-        audioLoader.releaseMediaPlayer()
+        audioLoader.onPause()
         if (animations != null && !animations!!.isRunning()) {
             animations!!.stop()
         }
@@ -222,13 +240,22 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     private fun backGroundAnimations() {
-        animations?.setEnterFadeDuration(5000);
+        animations?.setEnterFadeDuration(5000)
 
-        animations?.setExitFadeDuration(2000);
+        animations?.setExitFadeDuration(2000)
 
 
     }
 
+    private fun showGreenLight() {
+        bttn_buzzer.setBackgroundResource(R.drawable.circular_button_correct)
+
+    }
+
+    private fun showRedLight() {
+        bttn_buzzer.setBackgroundResource(R.drawable.circular_button_wrong)
+
+    }
 }
 
 

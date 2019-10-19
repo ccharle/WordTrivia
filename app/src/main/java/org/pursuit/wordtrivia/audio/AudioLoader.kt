@@ -45,6 +45,10 @@ class AudioLoader(
 
 
     }
+    fun onPause(){
+        mediaPlayer2.stop()
+        mediaPlayer.stop()
+    }
 
     fun releaseMediaPlayer() {
         mediaPlayer.release()
