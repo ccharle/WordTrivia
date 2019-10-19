@@ -1,10 +1,11 @@
 <Button android:id="@+id/grid_item"
     android:layout_gravity="center"
-    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:textAppearance="?android:attr/textAppearanceButton"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:textSize="20sp"
     android:clickable="false"
     android:focusable="false"
+    android:background="@drawable/letter_down"
     xmlns:android="http://schemas.android.com/apk/res/android" />
 
