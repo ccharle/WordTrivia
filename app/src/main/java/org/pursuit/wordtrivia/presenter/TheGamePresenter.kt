@@ -39,7 +39,10 @@ class TheGamePresenter(private val currentWord: String?, private val viewRef: Ma
                 }
 
             }
-        } else viewRef.gameOver()
+        }
+        if (incorrectGuess == 0) {
+            viewRef.gameOver()
+        }
     }
 
 
