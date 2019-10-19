@@ -224,7 +224,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     private fun backGroundAnimations() {
         animations?.setEnterFadeDuration(5000);
 
-        // setting exit fade animation duration to 2 seconds
         animations?.setExitFadeDuration(2000);
 
 
