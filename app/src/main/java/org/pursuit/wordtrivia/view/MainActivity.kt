@@ -3,18 +3,15 @@ package org.pursuit.wordtrivia.view
 import android.graphics.Color
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.text.method.MovementMethod
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.button_layout.*
-import org.pursuit.wordtrivia.contract.MainContract
 import org.pursuit.wordtrivia.R
 import org.pursuit.wordtrivia.adapter.AlphabetAdapter
 import org.pursuit.wordtrivia.audio.AudioLoader
+import org.pursuit.wordtrivia.contract.MainContract
 import org.pursuit.wordtrivia.network.WordClient
 import org.pursuit.wordtrivia.presenter.TheGamePresenter
 import org.pursuit.wordtrivia.presenter.WordNetworkPresenter
@@ -34,6 +31,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var gamePresenterRef: TheGamePresenter
     private lateinit var alphabetAdapter: AlphabetAdapter
     private val audioLoader = AudioLoader(this, MediaPlayer())
+
+
     private val wordClient by lazy {
         WordClient.create()
 
@@ -43,9 +42,18 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         gameSetup()
 
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
     }
 
     override fun revealHiddenLetter(
@@ -132,7 +140,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun gameOver() {
-        audioLoader.onLosing()
         gridvw_letters.isEnabled = false
         gridvw_letters.isClickable = false
         txtvw_gameover.setTextColor(Color.BLACK)
@@ -142,6 +149,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
         }
 
+        audioLoader.onLosing()
+
 
     }
 
@@ -150,15 +159,16 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             Snackbar.make(main_constraintlayout, "WINNER WINNER!", Snackbar.LENGTH_LONG)
         snack.show()
         audioLoader.onWin()
-        audioLoader.releaseMediaPlayer()
     }
 
     private fun gameSetup() {
+        audioLoader.backGroundMusic()
         alphabetAdapter = AlphabetAdapter(this)
         gridvw_letters.adapter = alphabetAdapter
         netWorkPresenterRef = WordNetworkPresenter(wordClient, this)
         netWorkPresenterRef.getWordList()
         bttn_newword.setOnClickListener {
+            audioLoader.backGroundMusic()
             resetGame()
 
         }
@@ -184,7 +194,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     private fun resetGame() {
-        audioLoader.releaseMediaPlayer()
         gridvw_letters.isEnabled = true
         gridvw_letters.isClickable = true
         netWorkPresenterRef.requestRandomWord();gamePresenterRef.onRefreshGame()
@@ -192,6 +201,16 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         wrongGuessTally = ""
         txtvw_gameover.setTextColor(Color.WHITE)
         imgvw_userprogress.setBackgroundResource(R.color.colorwhite)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        audioLoader.releaseMediaPlayer()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        audioLoader.releaseMediaPlayer()
     }
 
 }
