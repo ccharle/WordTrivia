@@ -41,6 +41,15 @@
             android:text="@string/previous_guesses"
             android:textSize="16sp"
             android:textStyle="bold" />
+        <Button
+            android:id="@+id/bttn_buzzer"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/circular_button"
+            />
 
 
         <TextView
