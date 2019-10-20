@@ -23,14 +23,15 @@ class WordNetworkPresenter(
     }
 
 
-
     override fun onNetworkCallFinished(dictionary: HashMap<Int, String>?) {
+        viewRef.hideLoading()
         viewRef.randomHiddenWord(dictionary?.getOrDefault(getRandomWord(), "Empty"))
     }
 
 
     override fun getWordList() {
         getWords()
+        viewRef.showLoading()
     }
 
     override fun netWorkCallFinished(onNetworkListener: MainContract.NetworkPresenter.OnNetworkCallListener) {
@@ -65,7 +66,7 @@ class WordNetworkPresenter(
 
     }
 
-   private fun getRandomWord(): Int {
+    private fun getRandomWord(): Int {
         return (0..wordDictionary.size).random()
 
     }

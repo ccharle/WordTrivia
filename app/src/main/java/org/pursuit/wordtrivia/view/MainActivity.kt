@@ -2,15 +2,20 @@ package org.pursuit.wordtrivia.view
 
 import android.graphics.Color
 import android.graphics.drawable.AnimationDrawable
+import android.media.Image
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.text.method.MovementMethod
 import android.text.method.ScrollingMovementMethod
+import android.view.View
 import android.view.animation.Animation
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import org.pursuit.wordtrivia.R
@@ -28,7 +33,31 @@ private const val TAG = "Response"
 private const val remainingGuessesSentence = " Guesses remaining."
 
 class MainActivity : AppCompatActivity(), MainContract.View {
+    override fun showLoading() {
 
+        Thread(Runnable {
+            this@MainActivity.runOnUiThread {
+                progress_bar.visibility = View.VISIBLE
+            }
+
+            try {
+                var i = 0
+                while (i < Int.MAX_VALUE) {
+                    i++
+                }
+            } catch (e: InterruptedException) {
+                e.printStackTrace()
+            }
+
+        }).start()
+    }
+
+
+    override fun hideLoading() {
+        this@MainActivity.runOnUiThread {
+            progress_bar.visibility = View.GONE
+        }
+    }
 
     private var displayWordsArray = arrayListOf<TextView>()
     private var blanksArray = arrayListOf<TextView>()
