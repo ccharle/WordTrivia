@@ -17,6 +17,8 @@ interface MainContract {
         fun showUserProgress(img :Int)
         fun correctSound()
         fun incorrectSound()
+        fun showLoading()
+        fun hideLoading()
     }
 
 
