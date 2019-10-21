@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.graphics.drawable.AnimationDrawable
 import android.media.Image
 import android.media.MediaPlayer
+import android.opengl.Visibility
 import android.os.Bundle
 import android.os.Handler
 import android.text.method.MovementMethod
@@ -29,34 +30,12 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-private const val TAG = "Response"
 private const val remainingGuessesSentence = " Guesses remaining."
 
 class MainActivity : AppCompatActivity(), MainContract.View {
-    override fun showLoading() {
-
-        Thread(Runnable {
-            this@MainActivity.runOnUiThread {
-                progress_bar.visibility = View.VISIBLE
-            }
-
-            try {
-                var i = 0
-                while (i < Int.MAX_VALUE) {
-                    i++
-                }
-            } catch (e: InterruptedException) {
-                e.printStackTrace()
-            }
-
-        }).start()
-    }
-
-
     override fun hideLoading() {
-        this@MainActivity.runOnUiThread {
-            progress_bar.visibility = View.GONE
-        }
+       progress_bar.visibility = View.GONE
+
     }
 
     private var displayWordsArray = arrayListOf<TextView>()
@@ -83,6 +62,12 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
 
     }
+
+    override fun showLoading() {
+        progress_bar.isIndeterminate = true
+        progress_bar.visibility = View.VISIBLE
+    }
+
 
     override fun onResume() {
         super.onResume()
