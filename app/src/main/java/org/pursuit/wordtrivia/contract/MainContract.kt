@@ -1,5 +1,7 @@
 package org.pursuit.wordtrivia.contract
 
+import org.pursuit.wordtrivia.user.User
+
 interface MainContract {
     interface View {
         fun onLetterPressed()
@@ -19,6 +21,7 @@ interface MainContract {
         fun incorrectSound()
         fun showLoading()
         fun hideLoading()
+        fun showUserScore(user: User)
     }
 
 

@@ -14,6 +14,7 @@ import android.view.animation.Animation
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -26,6 +27,7 @@ import org.pursuit.wordtrivia.contract.MainContract
 import org.pursuit.wordtrivia.network.WordClient
 import org.pursuit.wordtrivia.presenter.TheGamePresenter
 import org.pursuit.wordtrivia.presenter.WordNetworkPresenter
+import org.pursuit.wordtrivia.user.User
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -33,8 +35,12 @@ import kotlin.collections.ArrayList
 private const val remainingGuessesSentence = " Guesses remaining."
 
 class MainActivity : AppCompatActivity(), MainContract.View {
+    override fun showUserScore(user: User) {
+
+    }
+
     override fun hideLoading() {
-       progress_bar.visibility = View.GONE
+        progress_bar.visibility = View.GONE
 
     }
 
@@ -47,6 +53,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var alphabetAdapter: AlphabetAdapter
     private val audioLoader = AudioLoader(this, MediaPlayer())
     private var animations: AnimationDrawable? = null
+    val paul: User = User()
+
     private val wordClient by lazy {
         WordClient.create()
 
@@ -59,6 +67,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         animations = gridvw_letters.background as? AnimationDrawable
         backGroundAnimations()
         gameSetup()
+        paul.userScore = 100
+        txtvw_userscore.text = paul.userScore.toString()
 
 
     }
@@ -89,6 +99,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     ) {
 
         for (i in guessedLettersArray.indices) {
+            //assess if the tally already contains the letter to prevent duplicate insertions
             if (!wrongGuessTally.contains(guessedLettersArray[i])) {
                 wrongGuessTally += guessedLettersArray[i] + "\n"
             }
@@ -119,6 +130,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
 
     override fun randomHiddenWord(word: String?) {
+        Toast.makeText(this, word, Toast.LENGTH_LONG).show()
         txvw_score.text = 6.toString() + remainingGuessesSentence
         setArray(word)
         gamePresenterRef = TheGamePresenter(word, this)
@@ -175,6 +187,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         }
 
         audioLoader.onLosing()
+        paul.userScore -= 20
+        showUserScore(paul)
 
 
     }
@@ -184,6 +198,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             Snackbar.make(main_constraintlayout, "WINNER WINNER!", Snackbar.LENGTH_LONG)
         snack.show()
         audioLoader.onWin()
+        paul.userScore += 50
+        showUserScore(paul)
     }
 
     private fun gameSetup() {

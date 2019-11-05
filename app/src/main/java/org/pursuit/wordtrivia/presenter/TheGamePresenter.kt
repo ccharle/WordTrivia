@@ -54,18 +54,26 @@ class TheGamePresenter(private val currentWord: String?, private val viewRef: Ma
 
 
     private fun guessWord(input: String): Boolean {
+        //returns true if the word being guessed contains any character that the person entered
 
         return if (currentWord!!.contains(input.toLowerCase()) || currentWord.contains(input)) {
             if (!blankArray.contains(input)) {
+                //if the current index in the given word is equal to the character given by the user
+                //the correct guess count is incremented
+                //this is implemented so that the program can check the counter to see if the user has won
+                //this only increments once and it accounts for if the user guess a letter that would reveal multiple lines
                 for (i in currentWord.indices) {
                     if (currentWord[i] == input.toLowerCase().single() || currentWord[i] == input.single()) {
 
                         correctGuessCount++
+                        // current guesss goes up for each instance of the letter
 
 
                     }
                 }
                 blankArray.add(duplicateCounter, input)
+                //duplicate counter goes up by one and i used to account for multiple instances of the word affecting the
+                //ability to check correct guess to its length
                 duplicateCounter++
                 viewRef.correctSound()
             }

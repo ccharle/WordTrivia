@@ -56,6 +56,14 @@
             android:background="@drawable/circular_button"
             />
 
+        <TextView
+            android:id="@+id/txtvw_userscore"
+            tools:text="40"
+            android:textSize="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bttn_buzzer"/>
 
         <TextView
             android:id="@+id/txtvw_incorrectguesses"

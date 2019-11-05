@@ -13,16 +13,15 @@ class AudioLoader(
     private var mediaPlayer2: MediaPlayer = MediaPlayer()
     private var isPlaying: Boolean = false
     fun backGroundMusic() {
+
         if (!isPlaying) {
             mediaPlayer2 = MediaPlayer.create(context, R.raw.gameplay_music)
             mediaPlayer2.isLooping=true
             mediaPlayer2.start()
             isPlaying = true
-
-
         }else
-        mediaPlayer2.start()
 
+        mediaPlayer2.start()
     }
 
     fun onSplashScreen() {
@@ -39,12 +38,10 @@ class AudioLoader(
     }
 
     fun incorrectSound() {
-
         mediaPlayer = MediaPlayer.create(context, R.raw.wrong_answer)
         mediaPlayer.start()
-
-
     }
+
     fun onPause(){
         mediaPlayer2.stop()
         mediaPlayer.stop()
@@ -72,7 +69,6 @@ class AudioLoader(
             isPlaying = false
             mediaPlayer = MediaPlayer.create(context, R.raw.fail_fare)
             mediaPlayer.start()
-
         }
     }
 
